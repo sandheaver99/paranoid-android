@@ -33,7 +33,7 @@ class Player
         int exitFloor = in.nextInt(); // floor on which the exit is found
         int exitPos = in.nextInt(); // position of the exit on its floor
         int nbTotalClones = in.nextInt(); // number of generated clones
-        int nbAdditionalElevators = in.nextInt(); // ignore (always zero)
+        int nbAdditionalElevators = in.nextInt(); // number of additional elevators that can be built
         int nbElevators = in.nextInt(); // number of elevators
         
         for(int i = 0; i < nbFloors; i++)
@@ -69,6 +69,9 @@ class Player
             int clonePos = in.nextInt(); // position of the leading clone on its floor
             String direction = in.next(); // direction of the leading clone: LEFT or RIGHT
             
+			//if the floor has no elevator and is not the exit floor, build one
+            				
+            
             if(cloneFloor < 0)
             {
 				message = "WAIT";
@@ -77,6 +80,16 @@ class Player
 			else if(cloneFloor > -1 && floors.get(cloneFloor).hasBlock())
 			{
 				message = "WAIT";
+			}
+			
+			else if(floors.get(cloneFloor).getTarget() == 0)
+            {
+				message = "ELEVATOR";
+				floors.get(cloneFloor).addOutElevator(clonePos);
+				floors.get(cloneFloor+1).addInElevator(clonePos);     
+            
+				floors.get(cloneFloor).setTarget();
+				floors.get(cloneFloor+1).setTarget();
 			}
 			
 			else
@@ -178,6 +191,10 @@ class Floor
 	
 	
 	
+	
+	
+	
+
 	
 	
 	
